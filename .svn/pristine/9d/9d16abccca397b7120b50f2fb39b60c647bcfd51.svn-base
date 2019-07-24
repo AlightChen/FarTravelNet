@@ -1,0 +1,60 @@
+﻿using DAL;
+using DAL.Entitys;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BLL.User
+{
+    /// <summary> 
+    /// 创建人：落
+    /// 日 期：2019/4/5 13:43:24
+    /// 版 本：1.0
+    /// 描 述：用户表的BLL
+    /// </summary>
+    public class UserInfoBLL : UserInfoIBLL
+    {
+
+        private ISugerHandler sugerHandler = SugerHandler.Instance();
+
+        public bool Delete(UserInfo t)
+        {
+            return sugerHandler.Delete(t) > 0;
+        }
+
+        /// <summary>
+        /// 根据Key获取一条数据
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public UserInfo Get(string key)
+        {
+            return sugerHandler.Query<UserInfo>(x => x.ID == key);
+        }
+
+        public List<UserInfo> GetList(object o)
+        {
+            return sugerHandler.QueryList<UserInfo>(x => x.ENABLE && !x.UMDELETE);
+        }
+
+        public List<UserInfo> GetPage(QueryDescriptor q)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 插入一条数据
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
+        public bool Insert(UserInfo t)
+        {
+            return sugerHandler.Add(t) > 0;
+        }
+
+        public bool Update(UserInfo t)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

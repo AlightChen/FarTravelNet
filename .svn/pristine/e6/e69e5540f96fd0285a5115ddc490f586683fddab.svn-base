@@ -1,0 +1,22 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": { //数据库连接字串
+    //SQLServer
+    //"BaseDb": "Data Source=.;Initial Catalog=far_travel_net;Integrated Security=True"
+    //PostgreSQL
+    //"BaseDb": "SERVER=localhost;PORT=5432;DATABASE=far_travel_net;USER ID=postgres;PASSWORD=root"
+    //MySQl
+    "BaseDb": "server=127.0.0.1;user id=root;password=root;persistsecurityinfo=True;database=far_travel_net;SslMode=none",
+    //"BaseDb_Test": "Data Source=.;Initial Catalog=far_travel_net;Integrated Security=True"
+    "RedisConnection": "127.0.0.1:6379,password=,defaultDatabase=1,poolsize=50,ssl=false,writeBuffer=10240"
+  },
+  "AppSettings": {
+    //有关配置写到AppSettings的话可以直接通过调用Base的ConfigHelper来获取值
+    "DbType": 0 //MySql=0,SqlServer=1,Sqlite=2,Oracle=3,PostgreSQL=4
+  }
+}

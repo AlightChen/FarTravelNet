@@ -1,0 +1,8 @@
+﻿using DAL.Entitys;
+
+namespace BLL.User
+{
+    public interface UserInfoIBLL : BaseIBLL<UserInfo>
+    {
+    }
+}

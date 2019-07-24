@@ -1,0 +1,69 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Models;
+using Base;
+using FarTravelTechnology.Web.Controllers.Model;
+
+namespace FarTravelTechnology.Web.Controllers
+{
+    /// <summary> 
+    /// 创建人：落
+    /// 日 期：2019/2/22 9:11:00
+    /// 版 本：1.0
+    /// 描 述：基础控制器
+    /// </summary>
+    public class BaseController : Controller
+    {
+        #region 获取请求信息的公共方法
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <returns></returns>
+        protected RequstUser GetUser()
+        {
+            return new RequstUser()
+            {
+                IP = HttpContext.GetUserIp()
+            };
+        }
+
+        #endregion
+
+        #region 加载页面
+
+        /// <summary>
+        /// 列表
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Add()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
+        #endregion
+
+    }
+}

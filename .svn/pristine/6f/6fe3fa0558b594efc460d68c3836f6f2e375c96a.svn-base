@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using FarTravelNet.Api.Extensions;
+using Microsoft.AspNetCore.Mvc;
+
+namespace FarTravelNet.Api.Controllers
+{
+    /// <summary>
+    /// 登录接口
+    /// </summary>
+    
+    public class AccountController : BaseController
+    {
+        private readonly IApiTokenService _apiTokenService;
+
+        /// <summary>
+        /// 构造注入服务
+        /// </summary>
+        /// <param name="apiTokenService"></param>
+        public AccountController(IApiTokenService apiTokenService)
+        {
+            _apiTokenService = apiTokenService;
+        }
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult Login(string userName, string userPwd)
+        {
+            //login...
+            if (userName != "123456" && userPwd != "123456")
+                return Ok(new { status = 0, msg = "登录失败" });
+            var userId = 1;
+            var token = _apiTokenService.ConvertLoginToken(userId, userName);
+            //登录成功后返回token
+            return Ok(new { status = 1, msg = "登录成功", data = token });
+        }
+
+    }
+}

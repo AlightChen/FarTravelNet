@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Base;
+using BLL;
+using BLL.User;
+using DAL.Entitys;
+using Microsoft.AspNetCore.Mvc;
+
+namespace FarTravelNet.Api.Controllers
+{
+    /// <summary>
+    /// 测试接口
+    /// </summary>
+    public class ValuesController : BaseController
+    {
+        private UserInfoIBLL _bll = new UserInfoBLL();
+
+        // GET api/values
+        [HttpGet]
+        public ActionResult<ApiResult> Get()
+        {
+            List<UserInfo> list = _bll.GetList(null);
+            return Success(list);
+        }
+
+        // GET api/values/5
+        [HttpGet("{id}")]
+        public ActionResult<ApiResult> Get(string id)
+        {
+            UserInfo model = _bll.Get(id);
+            return Success(model);
+        }
+
+        // POST api/values
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
+
+        // PUT api/values/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/values/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
+    }
+}
