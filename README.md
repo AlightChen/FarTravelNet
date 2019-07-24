@@ -1,6 +1,6 @@
 # FarTravelNet
 
-一个比较简单的.NET Core+Sqlsugar+JWT+Swagger的开发
+一个比较简单的.NET Core+Sqlsugar+JWT+Swagger的简单开发框架
 
 数据库采用的是Mysql5.7
 
