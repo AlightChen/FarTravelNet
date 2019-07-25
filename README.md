@@ -1,8 +1,10 @@
 # FarTravelNet
 
-一个比较简单的.NET Core+SqlSugar+JWT+Swagger的开发框架
+一个比较简单的.NET Core+Autofac+SqlSugar+JWT+Swagger的开发框架
 
 数据库采用的是Mysql5.7
+
+可以配置使用Redis或者是系统缓存
 
 数据库文件在SQL文件这个文件夹里面
 
