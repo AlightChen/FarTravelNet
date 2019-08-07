@@ -111,6 +111,9 @@ namespace FarTravelNet.Api
             {
                 //下面是Debug环境才执行的
                 app.UseDeveloperExceptionPage();
+                //注入Swagger,这边如果想在Release环境也开启Swagger的话
+                //需要放到if前面去注入Swagger
+                //并且把bin目录下的FarTravelNet.xml文件拷贝到发布的站点的根目录，否则会报错
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
@@ -138,7 +141,12 @@ namespace FarTravelNet.Api
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
 
         #endregion

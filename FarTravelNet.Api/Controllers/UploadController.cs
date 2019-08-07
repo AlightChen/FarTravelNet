@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace FarTravelNet.Api.Controllers
 {
@@ -24,32 +25,44 @@ namespace FarTravelNet.Api.Controllers
         [SwaggerFileUpload(true)]
         public ActionResult<ApiResult> UpLoad()
         {
-            if (Request.Form.Files == null || Request.Form.Files[0] == null)
-                return Error("请上传文件");
-            var file = Request.Form.Files[0];
-            var upFileName = ContentDispositionHeaderValue
-                   .Parse(file.ContentDisposition)
-                   .FileName
-                   .Trim('"');
-            //大小，格式校验....
-            var fileName = Guid.NewGuid() + Path.GetExtension(upFileName);
-
-            string fileExtensions = upFileName.Split('.').Last();
-
-            var saveDir = $@".\wwwroot\uploads\{fileExtensions}\";
-            var savePath = saveDir + fileName;
-            var previewPath = $"/uploads/{fileExtensions}/{fileName}";
-
-            if (!Directory.Exists(saveDir))
+            try
             {
-                Directory.CreateDirectory(saveDir);
+                if (Request.Form.Files == null || Request.Form.Files[0] == null)
+                    return Error("请上传文件");
+                var file = Request.Form.Files[0];
+                var upFileName = ContentDispositionHeaderValue
+                       .Parse(file.ContentDisposition)
+                       .FileName
+                       .Trim('"');
+                //大小，格式校验....
+                var fileName = Guid.NewGuid() + Path.GetExtension(upFileName);
+
+                string fileExtensions = upFileName.Split('.').Last();
+
+                var saveDir = $@".\wwwroot\uploads\{fileExtensions}\";
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    saveDir = $@"./wwwroot/uploads/{fileExtensions}/";
+                }
+                var savePath = saveDir + fileName;
+                var previewPath = $"/uploads/{fileExtensions}/{fileName}";
+
+                if (!Directory.Exists(saveDir))
+                {
+                    Directory.CreateDirectory(saveDir);
+                }
+                using (FileStream fs = System.IO.File.Create(savePath))
+                {
+                    file.CopyTo(fs);
+                    fs.Flush();
+                }
+                return Success("上传成功", new { path = previewPath });
             }
-            using (FileStream fs = System.IO.File.Create(savePath))
+            catch (Exception ex)
             {
-                file.CopyTo(fs);
-                fs.Flush();
+                return Success("上传成功", new { msg = ex.Message });
+
             }
-            return Success("上传成功", new { path = previewPath });
         }
         #endregion
     }
